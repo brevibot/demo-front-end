@@ -2,6 +2,7 @@
 
 import { useState, useEffect, FormEvent } from 'react';
 import apiClient from '../lib/api'; // Import our configured API client
+import axios from 'axios'; // <-- ADD THIS IMPORT
 
 // Define a type for the successful API response
 interface SuccessResponse {
@@ -45,6 +46,7 @@ export default function Home() {
       setStatusMessage('✅ POST request was successful!');
     } catch (err) {
       console.error(err);
+      // By adding the import, this check will now work correctly.
       if (axios.isAxiosError(err) && err.response?.status === 403) {
         setError('CSRF Token validation failed! This is the expected error if the token is missing or incorrect.');
         setStatusMessage('❌ POST request was forbidden (403).');
@@ -62,7 +64,7 @@ export default function Home() {
     <div style={{ fontFamily: 'sans-serif', maxWidth: '600px', margin: '2rem auto', padding: '2rem', border: '1px solid #ccc', borderRadius: '8px' }}>
       <h1>Next.js + Spring Boot CSRF Demo (TypeScript)</h1>
 
-      <div style={{ padding: '1rem', backgroundColor: '#000000ff', borderRadius: '4px', marginBottom: '1rem' }}>
+      <div style={{ padding: '1rem', backgroundColor: '#f0f0f0', borderRadius: '4px', marginBottom: '1rem' }}>
         <strong>Status:</strong> {statusMessage}
       </div>
 
@@ -81,14 +83,14 @@ export default function Home() {
       </form>
 
       {response && (
-        <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: '#000000ff', border: '1px solid #4caf50', borderRadius: '4px' }}>
+        <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: '#e8f5e9', border: '1px solid #4caf50', borderRadius: '4px' }}>
           <h3>Success Response</h3>
           <pre>{JSON.stringify(response, null, 2)}</pre>
         </div>
       )}
 
       {error && (
-        <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: '#000000ff', border: '1px solid #f44336', borderRadius: '4px' }}>
+        <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: '#ffebee', border: '1px solid #f44336', borderRadius: '4px' }}>
           <h3>Error</h3>
           <p>{error}</p>
         </div>
